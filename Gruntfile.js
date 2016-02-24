@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         if (!target) {
             target = "minor";
         }
-        return grunt.task.run('default', "bump-only:" + target, "changelog", "shell:add", "bump-commit");
+        return grunt.task.run('typescript:default', "bump-only:" + target, "changelog", "shell:add", "bump-commit");
     });
 
     grunt.registerTask('default', ['typescript:default']);
