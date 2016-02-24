@@ -44,16 +44,24 @@ module.exports = function(grunt) {
                 command: 'git add CHANGELOG.md && git add -f dist'
             }
         },
-        changelog: {
-            options: {}
-        }
+        conventionalChangelog: {
+            options: {
+                changelogOpts: {
+                    // conventional-changelog options go here
+                    preset: 'angular'
+                }
+            },
+            release: {
+                src: 'CHANGELOG.md'
+            }
+        },
     });
 
     grunt.registerTask("release", "Release a new version", function(target) {
         if (!target) {
             target = "minor";
         }
-        return grunt.task.run('typescript:default', "bump-only:" + target, "changelog", "shell:add", "bump-commit");
+        return grunt.task.run('typescript:default', "bump-only:" + target, "conventionalChangelog", "shell:add", "bump-commit");
     });
 
     grunt.registerTask('default', ['typescript:default']);
