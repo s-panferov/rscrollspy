@@ -11,6 +11,10 @@ export interface ScrollSpyState {
 }
 
 export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpyState> {
+    static defaultProps = {
+        ids: []
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -24,18 +28,29 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
     throttledSpy: () => void;
     targetElements: HTMLElement[];
     scrollParent: HTMLElement;
+    listenerAssigned: boolean;
+
+    ids: string;
 
     componentDidMount() {
         const targetItems = this.findTargetElements(this.props.ids);
         this.targetElements = targetItems;
         this.spy(targetItems);
+        this.ids = this.props.ids.join('/');
 
-        let scrollParent = this.getScrollParent();
-        if (scrollParent) {
-            if (scrollParent == document.body) {
-                scrollParent = window as any;
+        this.assignListener();
+    }
+
+    componentDidUpdate(prevProps: ScrollSpyProps) {
+        let nextIdx = (this.props.ids || []).join('/');
+        if (nextIdx !== this.ids) {
+            this.ids = nextIdx;
+            this.targetElements = this.findTargetElements(this.props.ids);
+            this.spy(this.targetElements);
+
+            if (!this.listenerAssigned) {
+                this.assignListener();
             }
-            scrollParent.addEventListener('scroll', this.throttledSpy);
         }
     }
 
@@ -46,6 +61,17 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
                 scrollParent = window as any;
             }
             scrollParent.removeEventListener('scroll', this.throttledSpy);
+        }
+    }
+
+    assignListener() {
+        let scrollParent = this.getScrollParent();
+        if (scrollParent) {
+            if (scrollParent == document.body) {
+                scrollParent = window as any;
+            }
+            this.listenerAssigned = true;
+            scrollParent.addEventListener('scroll', this.throttledSpy);
         }
     }
 
@@ -64,8 +90,6 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
                 return document.getElementById(id);
             })
             .filter(Boolean);
-
-        console.log(targetItems);
 
         return targetItems;
     }

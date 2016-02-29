@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -18,12 +19,18 @@ var ScrollSpy = (function (_super) {
         var targetItems = this.findTargetElements(this.props.ids);
         this.targetElements = targetItems;
         this.spy(targetItems);
-        var scrollParent = this.getScrollParent();
-        if (scrollParent) {
-            if (scrollParent == document.body) {
-                scrollParent = window;
+        this.ids = this.props.ids.join('/');
+        this.assignListener();
+    };
+    ScrollSpy.prototype.componentDidUpdate = function (prevProps) {
+        var nextIdx = (this.props.ids || []).join('/');
+        if (nextIdx !== this.ids) {
+            this.ids = nextIdx;
+            this.targetElements = this.findTargetElements(this.props.ids);
+            this.spy(this.targetElements);
+            if (!this.listenerAssigned) {
+                this.assignListener();
             }
-            scrollParent.addEventListener('scroll', this.throttledSpy);
         }
     };
     ScrollSpy.prototype.componentWillUnmount = function () {
@@ -33,6 +40,16 @@ var ScrollSpy = (function (_super) {
                 scrollParent = window;
             }
             scrollParent.removeEventListener('scroll', this.throttledSpy);
+        }
+    };
+    ScrollSpy.prototype.assignListener = function () {
+        var scrollParent = this.getScrollParent();
+        if (scrollParent) {
+            if (scrollParent == document.body) {
+                scrollParent = window;
+            }
+            this.listenerAssigned = true;
+            scrollParent.addEventListener('scroll', this.throttledSpy);
         }
     };
     ScrollSpy.prototype.render = function () {
@@ -45,7 +62,6 @@ var ScrollSpy = (function (_super) {
             return document.getElementById(id);
         })
             .filter(Boolean);
-        console.log(targetItems);
         return targetItems;
     };
     ScrollSpy.prototype.getScrollParent = function () {
@@ -96,7 +112,6 @@ var ScrollSpy = (function (_super) {
     ScrollSpy.prototype.spy = function (targetElements) {
         var finalTargets = targetElements || this.targetElements;
         var newState = this.getViewState(finalTargets);
-        // TODO @spanferov not so stupid equal check
         if (newState.inView.join('/') !== this.state.inView.join('/')) {
             this.setState(newState);
             if (this.props.onChange) {
@@ -104,13 +119,14 @@ var ScrollSpy = (function (_super) {
             }
         }
     };
+    ScrollSpy.defaultProps = {
+        ids: []
+    };
     return ScrollSpy;
-})(React.Component);
+}(React.Component));
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ScrollSpy;
 function getScrollParent(el) {
-    // In firefox if the el is inside an iframe with display: none; window.getComputedStyle() will return null;
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=548397
     var computedStyle = getComputedStyle(el) || {};
     var position = computedStyle.position;
     if (position === 'fixed') {
@@ -150,3 +166,4 @@ function throttle(callback, limit) {
         }
     };
 }
+//# sourceMappingURL=index.js.map

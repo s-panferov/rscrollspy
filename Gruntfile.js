@@ -3,21 +3,16 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         clean: ['dist'],
-        typescript: {
+        ts: {
             default: {
                 options: {
                     compiler: './node_modules/typescript/bin/tsc',
-                    module: "commonjs",
-                    fast: 'never',
-                    jsx: 'React',
                     declaration: true,
-                    preserveConstEnums: true,
-                    target: 'es5',
-                    references: [
-                        "typings/tsd.d.ts"
-                    ]
+                    fast: 'never',
                 },
-                src: 'src/**/*.tsx',
+                tsconfig: './src/tsconfig.json',
+                watch: ['src/**/*.tsx', 'typings/**/*.d.ts'],
+                src: 'src/**/*.ts',
                 dest: 'dist'
             }
         },

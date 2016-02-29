@@ -19,7 +19,7 @@
         "**/*.tsx",
         "../typings/**/*.ts"
     ],
-    "compileOnSave": true,
+    "compileOnSave": false,
     "buildOnSave": false,
     "files": [
         "index.tsx",

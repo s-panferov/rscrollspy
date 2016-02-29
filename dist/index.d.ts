@@ -8,12 +8,19 @@ export interface ScrollSpyState {
     outView?: string[];
 }
 export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpyState> {
+    static defaultProps: {
+        ids: any[];
+    };
     constructor(props: any);
     throttledSpy: () => void;
     targetElements: HTMLElement[];
     scrollParent: HTMLElement;
+    listenerAssigned: boolean;
+    ids: string;
     componentDidMount(): void;
+    componentDidUpdate(prevProps: ScrollSpyProps): void;
     componentWillUnmount(): void;
+    assignListener(): void;
     render(): JSX.Element;
     findTargetElements(ids: string[]): HTMLElement[];
     getScrollParent(): HTMLElement;
