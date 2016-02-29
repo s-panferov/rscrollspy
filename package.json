@@ -1,6 +1,6 @@
 {
   "name": "rscrollspy",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React scroll spy component",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
