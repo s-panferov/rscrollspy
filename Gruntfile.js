@@ -11,7 +11,6 @@ module.exports = function(grunt) {
                     fast: 'never',
                 },
                 tsconfig: './src/tsconfig.json',
-                watch: ['src/**/*.tsx', 'typings/**/*.d.ts'],
                 src: 'src/**/*.ts',
                 dest: 'dist'
             }
@@ -56,8 +55,8 @@ module.exports = function(grunt) {
         if (!target) {
             target = "minor";
         }
-        return grunt.task.run('typescript:default', "bump-only:" + target, "conventionalChangelog", "shell:add", "bump-commit");
+        return grunt.task.run('ts:default', "bump-only:" + target, "conventionalChangelog", "shell:add", "bump-commit");
     });
 
-    grunt.registerTask('default', ['typescript:default']);
+    grunt.registerTask('default', ['ts:default']);
 };
