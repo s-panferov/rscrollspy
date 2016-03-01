@@ -2,6 +2,7 @@ import * as React from 'react';
 
 export interface ScrollSpyProps extends React.Props<ScrollSpy> {
     ids: string[];
+    htmlProps?: React.HTMLAttributes;
     onChange?: (inView: string[], outView: string[]) => void;
 }
 
@@ -78,9 +79,7 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
     render() {
         let renderer: (inView: string[], outView: string[]) => React.ReactElement<any> = this.props.children as any;
         return (
-            <div>
-                { renderer(this.state.inView, this.state.outView) }
-            </div>
+            renderer(this.state.inView, this.state.outView)
         );
     }
 

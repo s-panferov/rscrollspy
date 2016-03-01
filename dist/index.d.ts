@@ -1,6 +1,7 @@
 import * as React from 'react';
 export interface ScrollSpyProps extends React.Props<ScrollSpy> {
     ids: string[];
+    htmlProps?: React.HTMLAttributes;
     onChange?: (inView: string[], outView: string[]) => void;
 }
 export interface ScrollSpyState {
@@ -21,7 +22,7 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
     componentDidUpdate(prevProps: ScrollSpyProps): void;
     componentWillUnmount(): void;
     assignListener(): void;
-    render(): JSX.Element;
+    render(): React.ReactElement<any>;
     findTargetElements(ids: string[]): HTMLElement[];
     getScrollParent(): HTMLElement;
     getOffsetHeight(): number;

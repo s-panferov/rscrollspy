@@ -54,7 +54,7 @@ var ScrollSpy = (function (_super) {
     };
     ScrollSpy.prototype.render = function () {
         var renderer = this.props.children;
-        return (React.createElement("div", null, renderer(this.state.inView, this.state.outView)));
+        return (renderer(this.state.inView, this.state.outView));
     };
     ScrollSpy.prototype.findTargetElements = function (ids) {
         var targetItems = ids
