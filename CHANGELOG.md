@@ -1,3 +1,13 @@
+<a name="0.0.6"></a>
+## [0.0.6](https://github.com/s-panferov/rscrollspy/compare/v0.0.5...v0.0.6) (2016-03-01)
+
+
+### Features
+
+* remove self container ([78795c5](https://github.com/s-panferov/rscrollspy/commit/78795c5))
+
+
+
 <a name="0.0.5"></a>
 ## 0.0.5 (2016-02-29)
 
