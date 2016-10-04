@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "moduleResolution": "node",
+        "outDir": "lib",
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "skipDefaultLibCheck": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictNullChecks": true,
+        "pretty": true,
+        "declaration": true,
+        "baseUrl": ".",
+        "paths": {
+            "@revjet/funy": [ "./src/index.ts" ],
+            "@revjet/funy/*": [ "./src/*" ]
+        },
+        "lib": [
+            "es6",
+            "dom"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

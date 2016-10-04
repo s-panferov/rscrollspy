@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface ScrollSpyProps extends React.Props<ScrollSpy> {
     ids: string[];
-    htmlProps?: React.HTMLAttributes;
+    htmlProps?: React.HTMLAttributes<HTMLElement>;
     onChange?: (inView: string[], outView: string[]) => void;
 }
 
@@ -16,7 +16,7 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
         ids: []
     };
 
-    constructor(props) {
+    constructor(props: ScrollSpyProps) {
         super(props);
         this.state = {
             inView: [],
@@ -26,12 +26,12 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
         this.throttledSpy = throttle(this.spy.bind(this), 25);
     }
 
-    throttledSpy: () => void;
-    targetElements: HTMLElement[];
-    scrollParent: HTMLElement;
-    listenerAssigned: boolean;
+    private throttledSpy: () => void;
+    private targetElements: HTMLElement[];
+    private scrollParent: HTMLElement;
+    private listenerAssigned: boolean;
 
-    ids: string;
+    private ids: string;
 
     componentDidMount() {
         const targetItems = this.findTargetElements(this.props.ids);
@@ -42,7 +42,7 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
         this.assignListener();
     }
 
-    componentDidUpdate(prevProps: ScrollSpyProps) {
+    componentDidUpdate(_: ScrollSpyProps) {
         let nextIdx = (this.props.ids || []).join('/');
         if (nextIdx !== this.ids) {
             this.ids = nextIdx;
@@ -79,7 +79,7 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
     render() {
         let renderer: (inView: string[], outView: string[]) => React.ReactElement<any> = this.props.children as any;
         return (
-            renderer(this.state.inView, this.state.outView)
+            renderer(this.state.inView as string[], this.state.outView as string[])
         );
     }
 
@@ -88,12 +88,12 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
             .map((id) => {
                 return document.getElementById(id);
             })
-            .filter(Boolean);
+            .filter(Boolean) as HTMLElement[];
 
         return targetItems;
     }
 
-    getScrollParent() {
+    getScrollParent(): HTMLElement {
         if (this.scrollParent) {
             return this.scrollParent;
         } else {
@@ -104,6 +104,8 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
                 );
             }
         }
+
+        return document.body;
     }
 
     getOffsetHeight(): number {
@@ -152,10 +154,10 @@ export default class ScrollSpy extends React.Component<ScrollSpyProps, ScrollSpy
         let finalTargets = targetElements || this.targetElements;
         let newState = this.getViewState(finalTargets);
         // TODO @spanferov not so stupid equal check
-        if (newState.inView.join('/') !== this.state.inView.join('/')) {
+        if ((newState.inView as string[]).join('/') !== (this.state.inView as string[]).join('/')) {
             this.setState(newState);
             if (this.props.onChange) {
-                this.props.onChange(newState.inView, newState.outView);
+                this.props.onChange(newState.inView as string[], newState.outView as string[]);
             }
         }
     }
@@ -177,18 +179,18 @@ function getScrollParent(el: HTMLElement): HTMLElement {
             break;
         }
 
-        let style;
+        let style: CSSStyleDeclaration | undefined;
         try {
             style = getComputedStyle(parent);
         } catch (err) { }
 
-        if (typeof style === 'undefined' || style === null) {
+        if (typeof style === 'undefined') {
             return parent;
         }
 
         const {overflow, overflowX, overflowY} = style;
         if (/(auto|scroll)/.test(overflow + overflowY + overflowX)) {
-            if (position !== 'absolute' || ['relative', 'absolute', 'fixed'].indexOf(style.position) >= 0) {
+            if (position !== 'absolute' || ['relative', 'absolute', 'fixed'].indexOf(style.position as string) >= 0) {
                 return parent;
             }
         }
@@ -197,7 +199,7 @@ function getScrollParent(el: HTMLElement): HTMLElement {
     return document.body;
 }
 
-function throttle(callback, limit) {
+function throttle(callback: any, limit: any) {
     let wait = false;
     return function () {
         if (!wait) {
