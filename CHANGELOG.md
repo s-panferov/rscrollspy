@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/s-panferov/rscrollspy/compare/v2.0.0...v2.0.1) (2016-10-04)
+
+
+### Bug Fixes
+
+* build improvements ([a14e0c0](https://github.com/s-panferov/rscrollspy/commit/a14e0c0))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/s-panferov/rscrollspy/compare/v0.0.6...v2.0.0) (2016-10-04)
 
