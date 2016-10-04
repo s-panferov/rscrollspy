@@ -1,3 +1,22 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/s-panferov/rscrollspy/compare/v0.0.6...v2.0.0) (2016-10-04)
+
+
+### Features
+
+* refactor to support typescript[@2](https://github.com/2) ([50d0db1](https://github.com/s-panferov/rscrollspy/commit/50d0db1))
+
+
+### BREAKING CHANGES
+
+* requires @types/react
+
+
+
 <a name="0.0.6"></a>
 ## [0.0.6](https://github.com/s-panferov/rscrollspy/compare/v0.0.5...v0.0.6) (2016-03-01)
 
@@ -38,6 +57,3 @@
 ### Features
 
 * initial commit ([8840f64](https://github.com/s-panferov/rscrollspy/commit/8840f64))
-
-
-
